@@ -5,10 +5,16 @@
 ## 프로젝트 소개
 
 **헤이즈(Haze)** 는 외모가 아닌 목소리와 대화에 먼저 집중하며 진솔한 관계를 맺는 새로운 소통 경험을 제공합니다. <br>
-사용자는 프라이버시가 보호된 블러 화면으로 대화를 시작하며, 상호 동의가 이루어졌을 때 비로소 선명한 화면으로 전환되어 안전하고 신뢰도 높은 만남을 유도하는 1:1 랜덤 화상채팅 플랫폼입니다.
+사용자는 프라이버시가 보호된 블러 화면으로 대화를 시작하고 상호 동의가 이루어졌을 때 비로소 선명한 화면으로 전환되어 안전하고 신뢰도 높은 만남을 유도하는 1:1 랜덤 화상채팅 플랫폼입니다.
 
 <p align="center">
-images
+  <img src="https://github.com/user-attachments/assets/717bd804-cbc9-49a2-ab7f-4a3f4c503d04" alt="1" width="19%">
+  &nbsp;
+  <img src="https://github.com/user-attachments/assets/423dc570-0bdd-4db1-bb43-16900f07a63b" alt="2" width="19%">
+  &nbsp;
+  <img src="https://github.com/user-attachments/assets/fb263dc2-dc56-447e-80a3-784b6c7076e8" alt="3" width="19%">
+  &nbsp;
+  <img src="https://github.com/user-attachments/assets/acd4e111-df56-49c4-9f69-8efd425ade97" alt="4" width="19%">
 </p>
 
 <br>
@@ -26,31 +32,28 @@ images
 ## 사용한 기술
 
 - **인프라**
-  - **AWS Lightsail** - 가볍지만 개발에 문제없고 저렴한 Lightsail 서버를 사용
+  - **AWS Lightsail** - MVP 단계에 적합한 비용 효율적인 서버를 구축하기 위해 채택
   - **AWS S3** - 유저 프로필 이미지를 DB에 저장하기 위해 S3를 사용
   - **AWS Cloudfront** - 메이드잇 프로젝트를 통해 깨달은 점을 통해 S3와의 연동으로 빠른 리소스 제공을 위해 사용
   - **Nginx (certbot)** - 대여한 도메인에 Https(SSL) 인증서 적용을 위해 웹서버와 Certbot 도구를 이용
 - **CI/CD**
-  - **Github Action** - CICD를 쉽게 관리하기 위해 사용함.
+  - **Github Action** - CICD를 쉽게 관리하기 위해 사용
   - **Docker** - 컨테이너화를 통해 배포&관리를 빠르고 쉽게 하기 위해 사용
 - **개발**
   - **Typescript** - AWS Lambda와 연계로 코드 안정성과 생산성 향상을 위해 사용
-  - **Express** - 간단한 회원가입과 화상채팅 기능만 만들고 빠르게 비즈니스 검증을 하기로 결정했기에 자유롭고 경량화된 웹 프레임워크인 Express를 사용
-  - **SocketIO** - 웹소켓 프로토콜을 이용하기 위해 주로 사용되고 레퍼런스도 많은 SocketIO 라이브러리를 사용
+  - **Express** - MVP의 목표인 '빠른 프로토타이핑과 시장 검증' 을 위해, 최소한의 설정으로 핵심 기능 개발에만 집중할 수 있는 경량 프레임워크를 선택
+  - **SocketIO** - WebRTC 시그널링과 실시간 매칭을 위한 WebSocket 구현 시, 신뢰성 높은 실시간 통신 라이브러리를 사용
 - **DB**
-  - **MongoDB Atlas** - 빠른 개발을 위해 NoSQL인 MongoDB와 직접 DB 설정을 하며 생기는 개발력을 아끼기 위해 클라우드 서비스인 Atlas를 이용
+  - **MongoDB Atlas** - 스키마 변경이 유연한 NoSQL의 장점을 활용해 빠르게 기능을 개선하고, DB 인프라 관리보다 핵심 로직 개발에 집중하기 위해 완전 관리형 서비스를 채택
 
 ## ERD
-
-image
+<img width="750" height="452" alt="Haze" src="https://github.com/user-attachments/assets/48a92847-b332-4761-9bc6-f330630156ad" />
 
 ## 시스템 아키텍쳐
-
-image
+<img width="834" height="626" alt="Haze" src="https://github.com/user-attachments/assets/0ed8664c-e4a3-43d4-8e36-55c96a66788e" />
 
 ## WAS 아키텍쳐
-
-image
+<img width="611" height="741" alt="Haze WAS" src="https://github.com/user-attachments/assets/55c0496d-b40d-43cf-a024-94d2430a8de7" />
 
 ## 소켓 파라미터 (Socket 인터페이스 확장)
 
@@ -144,7 +147,7 @@ src/
 └── public/           # 관리자 대시보드 정적 파일
 ```
 
-## 주요 역할
+## 주요 역할 (1인 백엔드 개발 및 인프라 구축)
 
 ### [**WebRTC와 Socket.IO 기반 실시간 P2P 화상채팅 구현**](https://soohyeok8901.notion.site/WebRTC-P2P-26b79b04d0dc802d869bfd6feb15dd78?source=copy_link)
 
@@ -172,7 +175,11 @@ src/
 - **단일 서버의 한계와 확장성 고민**<br>
   현재 매칭 시스템은 서버 메모리의 Map 객체를 기반으로 동작하기에 서버 인스턴스가 하나일 때 가장 효율적입니다. <br>하지만 트래픽 증가로 서버를 여러 대로 확장할 경우, 각 서버가 가진 메모리 상태가 동기화되지 않는 문제가 발생합니다. <br>이 문제를 해결하기 위해, 향후 Redis와 같은 중앙 집중식 저장소를 도입하여 상태를 공유함으로써 여러 서버에서도 정합성을 유지하는 구조로의 확장을 염두했습니다.
 
+### 관련 포스팅
+- [WebRTC Signaling이란? - P2P 통신을 위한 개념](https://velog.io/@devshk447/WebRTC-Signaling%EC%9D%B4%EB%9E%80-P2P-%ED%86%B5%EC%8B%A0%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B0%9C%EB%85%90)
+
+
 ### **전체 요약 & 회고**
 
-**Haze**는 WebRTC 기반의 실시간 P2P 화상채팅과 매칭 로직을 구현하며 **비동기 흐름, 동시성 이슈, 상태 관리**를 깊이 있게 경험하고 해결한 프로젝트였습니다. <br>
-특히, 어플리케이션 레벨에서 직접 상태 관리 프로세스를 설계하여 중복 매칭이라는 고질적인 동시성 문제를 해결한 경험은 큰 자산이 되었습니다.
+**Haze**는 WebRTC 기반의 실시간 P2P 화상채팅과 매칭 로직을 구현하며 발생하는 **비동기 흐름, 동시성 이슈, 상태 관리** 문제를 다루는 과정이었습니다. <br>
+특히, 중복 매칭과 같은 동시성 문제를 방지하고자 어플리케이션 레벨에서 상태 관리 프로세스를 설계하고 적용하는 데 집중했습니다.
